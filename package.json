@@ -1,0 +1,24 @@
+{
+  "name": "los-pollos-assignment-1",
+  "version": "1.0.0",
+  "description": "Great news! We've just signed up a new client, Los Pollos Hermanos, and they want us to handle all of their deliveries across 14 different locations. But there's a catch: they use an ordering platform that we don't yet integrate with and they won't let us start service until we do. They've given us their login information and a URL to login at and are leaving the rest for us to figure out.",
+  "main": "server.js",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "request": "^2.72.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mellemel/los-pollos-assignment-1.git"
+  },
+  "author": "Melvin Canela",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mellemel/los-pollos-assignment-1/issues"
+  },
+  "homepage": "https://github.com/Mellemel/los-pollos-assignment-1#readme"
+}

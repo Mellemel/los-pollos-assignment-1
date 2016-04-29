@@ -1,0 +1,10 @@
+{
+  "name": "los-pollos-assignment-1",
+  "version": false,
+  "dependencies": {},
+  "ambientDependencies": {
+    "cheerio": "registry:dt/cheerio#0.17.0+20160407085313",
+    "node": "registry:dt/node#4.0.0+20160423143914",
+    "request": "registry:dt/request#0.0.0+20160316155526"
+  }
+}
