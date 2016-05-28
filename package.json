@@ -5,11 +5,12 @@
   "main": "server.js",
   "dependencies": {
     "cheerio": "^0.20.0",
+    "moment": "^2.13.0",
     "request": "^2.72.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
