@@ -1,5 +1,5 @@
 "use strict";
-class Order {
+module.exports = class Order {
   constructor(options){
     this.order_id = options.order_id;
     this.created_at = options.created_at;

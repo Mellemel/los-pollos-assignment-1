@@ -39,51 +39,92 @@ request.post({
     $(".table tbody").nextAll().each(function () {
       var data = $(this).children();
 
+      // acquiring /order data
       var order_id = data.eq(0).text(),
         delivery_time = data.eq(1).text(),
         customer_name = data.eq(2).text(),
         company_name = data.eq(3).text(),
-        tip_amount = data.eq(4).text(),
-        total = data.eq(5).text(),
+        tip_amount = parseFloat(data.eq(4).text().replace(/[$]/g, "")),
         created_at = data.eq(6).text();
 
       var orderLink = redirectURL + "/" + order_id;
 
+      // acquiring /order/order_id data
       request(orderLink, (err, res, body) => {
-        var phone_number, customer_address, payment_type;
-        $ = cheerio.load(body);
-        if (!!company_name) {
-          phone_number = $(".customer").html().split("<br>")[3];
-          customer_address = $(".customer").html().split("<br>")[4]
-        } else {
-          phone_number = $(".customer").html().split("<br>")[2];
-          customer_address = $(".customer").html().split("<br>")[3]
+        if (err) {
+          console.log(err);
         }
-        payment_type = $(".payment").text().split(" ")[2].replace(/\./g, "");
+
+        try {
+          $ = cheerio.load(body);
+        } catch (err) {
+          console.log(err);
+          console.log(body);
+        }
+
+        var phone_number, customer_address, payment_type;
+        if (company_name) {
+          try {
+            phone_number = $(".customer").html().split("<br>")[3];
+            customer_address = $(".customer").html().split("<br>")[4]
+          } catch (err) {
+            console.log(err);
+            console.log($(".customer"));
+          }
+        } else {
+          try {
+            phone_number = $(".customer").html().split("<br>")[2];
+            customer_address = $(".customer").html().split("<br>")[3]
+          } catch (err) {
+            console.log(err);
+            console.log($(".customer"));
+          }
+        }
+
+        var order_items = [], total = 0;
         $(".table tbody tr").each(function () {
           var data = $(this).children();
-          var quantity = parseInt(data.eq(0).text().replace(/[a-x]/g, ""));
+          var quantity = parseInt(data.eq(0).text().replace(/[x]/g, ""));
           var items = data.eq(1).text();
           var price = parseFloat(data.eq(2).text().replace(/[$]/g, ""));
+
+          order_items.push({
+            quantity: quantity,
+            items: items,
+            price: price
+          })
+          total += price;
         })
-        
-        var order = {
+
+        try {
+          payment_type = $(".payment").text().split(" ")[2].replace(/\./g, "");
+        } catch (err) {
+          console.log(err);
+          console.log($(".payment"));
+        }
+
+
+        var options = {
           order_id: order_id,
           created_at: created_at,
+          delivery_time: delivery_time,
           customer: {
             customer_name: customer_name,
+            company_name: company_name,
             customer_address: customer_address,
             phone_number: phone_number
           },
-          company_name: company_name,
-          delivery_time: delivery_time,
-          items: items,
+          items: order_items,
           tip_amount: tip_amount,
-          total: total,
+          total: tip_amount + total,
         }
-        
-        console.log(order);
-        allOrder.push(new Order(order));
+
+        console.log("Order coming in:");
+        console.dir(options);
+
+        var order = new Order(options);
+        allOrder.push(order);
+        console.log("Total Number of Orders: " + allOrder.length + "\n");
       })
     })
   })
