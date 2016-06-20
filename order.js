@@ -1,18 +1,16 @@
 "use strict";
 module.exports = class Order {
-  constructor(options){
-    this.order_id = options.order_id;
-    this.created_at = options.created_at;
-    this.customer_name = options.customer_name;
-    this.company_name = options.company_name;
-    this.delivery_time = options.delivery_time;
-    this.delivery_address = options.delivery_address;
-    this.tip_amount = options.tip_amount;
-    this.total = options.total;
-    this.items = options.items;
-    this.payment_type = options.payment_type;
+  constructor(options) {
+    this._order_id = options.order_id;
+    this._created_at = options.created_at;
+    this._delivery_time = options.delivery_time;
+    this._customer = options.customer;
+    this._items = options.items;
+    this._tip_amount = options.tip_amount;
+    this._total = options.total;
+    this._payment_type = options.payment_type;
   }
-  getValue (value){
-    return this.value;
+  get order_id() {
+    return this._order_id;
   }
 }
